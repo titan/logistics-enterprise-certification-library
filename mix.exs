@@ -1,4 +1,4 @@
-defmodule Enterprise.Certification.Mixfile do
+defmodule Enterprise.Certification.Library.Mixfile do
   use Mix.Project
 
   def project do
