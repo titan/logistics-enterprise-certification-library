@@ -18,6 +18,6 @@ defmodule Enterprise.Certification.Certification do
   | legal_representative | person  | 法人代表 |
   | person_in_charge     | person  | 负责人   |
   """
-  defstruct id: nil, uid: nil, status: nil, reason: nil, base: nil, image: nil, business_license: nil, trader_license: nil, brand: nil, legal_representative: nil, person_in_charge: nil
-  @type t :: %Enterprise.Certification.Certification{id: String.t, uid: String.t, status: String.t, reason: String.t, base: Enterprise.Certification.Base.t, image: Enterprise.Certification.Image.t, business_license: Enterprise.Certification.License.t, trader_license: Enterprise.Certification.License.t, brand: String.t, legal_representative: Enterprise.Certification.Person.t, person_in_charge: Enterprise.Certification.Person.t}
+  defstruct id: nil, uid: nil, oid: nil, status: nil, reason: nil, base: nil, image: nil, business_license: nil, trader_license: nil, brand: nil, legal_representative: nil, person_in_charge: nil
+  @type t :: %Enterprise.Certification.Certification{id: String.t, uid: String.t, oid: String.t, status: String.t, reason: String.t, base: Enterprise.Certification.Base.t, image: Enterprise.Certification.Image.t, business_license: Enterprise.Certification.License.t, trader_license: Enterprise.Certification.License.t, brand: String.t, legal_representative: Enterprise.Certification.Person.t, person_in_charge: Enterprise.Certification.Person.t}
 end
