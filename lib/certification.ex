@@ -6,7 +6,8 @@ defmodule Enterprise.Certification.Certification do
   | name                 | type    | meaning  |
   |----------------------|---------|----------|
   | id                   | uuid    | 认证编号 |
-  | uid                  | uuid    | 人员编号 |
+  | uid                  | uuid    | 申请人员 |
+  | oid                  | uuid    | 审核人员 |
   | status               | string  | 认证状态 |
   | reason               | string  | 拒绝原因 |
   | base                 | base    | 基本信息 |
