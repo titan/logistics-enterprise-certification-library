@@ -1,4 +1,5 @@
 defmodule Enterprise.Certification.Api do
+  alias Enterprise.Certification.{Entity, Event}
   @moduledoc """
 
   # 认证模块客户端
@@ -11,7 +12,7 @@ defmodule Enterprise.Certification.Api do
   ```elixir
   ...
   defp deps do
-  [ {:enterprise_certification_library, git: "git@gitlab.ruicloud.cn:titan/logistics-enterprise-certification-library.git", tag: "0.0.1" } ]
+  [ {:enterprise_certification_library, git: "git@gitlab.ruicloud.cn:titan/logistics-enterprise-certification-library.git", tag: "0.0.2" } ]
   end
   ```
 
@@ -296,7 +297,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec unaccepted(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
+  @spec unaccepted(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Entity.t]} | {:error, code, reason}
   def unaccepted(offset, limit, max \\ nil) do
     remote_call(:unaccepted, [offset, limit, max])
   end
@@ -313,7 +314,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec accepted(uuid, non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
+  @spec accepted(uuid, non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Entity.t]} | {:error, code, reason}
   def accepted(oid, offset, limit, max \\ nil) do
     remote_call(:accepted, [oid, offset, limit, max])
   end
@@ -329,7 +330,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec passed(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
+  @spec passed(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Entity.t]} | {:error, code, reason}
   def passed(offset, limit, max \\ nil) do
     remote_call(:passed, [offset, limit, max])
   end
@@ -345,7 +346,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec refused(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
+  @spec refused(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Entity.t]} | {:error, code, reason}
   def refused(offset, limit, max \\ nil) do
     remote_call(:refused, [offset, limit, max])
   end
@@ -359,7 +360,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec search_unaccepted(String.t) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
+  @spec search_unaccepted(String.t) :: {:ok, [Entity.t]} | {:error, code, reason}
   def search_unaccepted(name) do
     remote_call(:search_unaccepted, [name])
   end
@@ -374,7 +375,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec search_accepted(uuid, String.t) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
+  @spec search_accepted(uuid, String.t) :: {:ok, [Entity.t]} | {:error, code, reason}
   def search_accepted(oid, name) do
     remote_call(:search_accepted, [oid, name])
   end
@@ -388,7 +389,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec search_passed(String.t) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
+  @spec search_passed(String.t) :: {:ok, [Entity.t]} | {:error, code, reason}
   def search_passed(name) do
     remote_call(:search_passed, [name])
   end
@@ -402,7 +403,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec search_refused(String.t) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
+  @spec search_refused(String.t) :: {:ok, [Entity.t]} | {:error, code, reason}
   def search_refused(name) do
     remote_call(:search_refused, [name])
   end
@@ -416,7 +417,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec certification(uuid) :: {:ok, Enterprise.Certification.Certification.t} | {:error, code, reason}
+  @spec certification(uuid) :: {:ok, Entity.t} | {:error, code, reason}
   def certification(id) do
     remote_call(:certification, [id])
   end
@@ -430,12 +431,12 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec events(uuid) :: {:ok, [Enterprise.Certification.Event.t]} | {:error, code, reason}
+  @spec events(uuid) :: {:ok, [Event.t]} | {:error, code, reason}
   def events(id) do
     remote_call(:events, [id])
   end
 
-  @spec remote_call(atom, [integer | non_neg_integer | float | String.t]) :: :ok | {:ok, Enterprise.Certification.Certification.t} | {:ok, [Enterprise.Certification.Certification.t]} | {:ok, [Enterprise.Certification.Event.t]} | {:error, code, reason}
+  @spec remote_call(atom, [integer | non_neg_integer | float | String.t]) :: :ok | {:ok, Entity.t} | {:ok, [Entity.t]} | {:ok, [Event.t]} | {:error, code, reason}
   defp remote_call(cmd, args) when is_atom(cmd) and is_list(args) do
     :resource_discovery.rpc_call(:enterprise_certification_service, Enterprise.Certification.Service, cmd, args)
   end

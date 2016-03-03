@@ -1,4 +1,4 @@
-defmodule Enterprise.Certification.Certification do
+defmodule Enterprise.Certification.Entity do
   @derive [Poison.Encoder]
   @moduledoc """
   认证信息
@@ -19,5 +19,5 @@ defmodule Enterprise.Certification.Certification do
   | person_in_charge     | person  | 负责人   |
   """
   defstruct id: nil, uid: nil, aid: nil, status: nil, reason: nil, base: nil, image: nil, business_license: nil, trader_license: nil, brand: nil, legal_representative: nil, person_in_charge: nil
-  @type t :: %Enterprise.Certification.Certification{id: String.t, uid: String.t, aid: String.t, status: String.t, reason: String.t, base: Enterprise.Certification.Base.t, image: Enterprise.Certification.Image.t, business_license: Enterprise.Certification.License.t, trader_license: Enterprise.Certification.License.t, brand: String.t, legal_representative: Enterprise.Certification.Person.t, person_in_charge: Enterprise.Certification.Person.t}
+  @type t :: %Enterprise.Certification.Entity{id: String.t, uid: String.t, aid: String.t, status: String.t, reason: String.t, base: Enterprise.Certification.Base.t, image: Enterprise.Certification.Image.t, business_license: Enterprise.Certification.License.t, trader_license: Enterprise.Certification.License.t, brand: String.t, legal_representative: Enterprise.Certification.Person.t, person_in_charge: Enterprise.Certification.Person.t}
 end
