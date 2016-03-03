@@ -296,7 +296,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec unaccepted(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification]} | {:error, code, reason}
+  @spec unaccepted(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
   def unaccepted(offset, limit, max \\ nil) do
     remote_call(:unaccepted, [offset, limit, max])
   end
@@ -313,7 +313,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec accepted(uuid, non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification]} | {:error, code, reason}
+  @spec accepted(uuid, non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
   def accepted(oid, offset, limit, max \\ nil) do
     remote_call(:accepted, [oid, offset, limit, max])
   end
@@ -329,7 +329,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec passed(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification]} | {:error, code, reason}
+  @spec passed(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
   def passed(offset, limit, max \\ nil) do
     remote_call(:passed, [offset, limit, max])
   end
@@ -345,7 +345,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec refused(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification]} | {:error, code, reason}
+  @spec refused(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
   def refused(offset, limit, max \\ nil) do
     remote_call(:refused, [offset, limit, max])
   end
@@ -359,7 +359,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec search_unaccepted(String.t) :: {:ok, [Enteprise.Certification.Certification]} | {:error, code, reason}
+  @spec search_unaccepted(String.t) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
   def search_unaccepted(name) do
     remote_call(:search_unaccepted, [name])
   end
@@ -374,7 +374,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec search_accepted(uuid, String.t) :: {:ok, [Enteprise.Certification.Certification]} | {:error, code, reason}
+  @spec search_accepted(uuid, String.t) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
   def search_accepted(oid, name) do
     remote_call(:search_accepted, [oid, name])
   end
@@ -388,7 +388,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec search_passed(String.t) :: {:ok, [Enteprise.Certification.Certification]} | {:error, code, reason}
+  @spec search_passed(String.t) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
   def search_passed(name) do
     remote_call(:search_passed, [name])
   end
@@ -402,7 +402,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec search_refused(String.t) :: {:ok, [Enteprise.Certification.Certification]} | {:error, code, reason}
+  @spec search_refused(String.t) :: {:ok, [Enteprise.Certification.Certification.t]} | {:error, code, reason}
   def search_refused(name) do
     remote_call(:search_refused, [name])
   end
@@ -416,7 +416,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec certification(uuid) :: {:ok, Enterprise.Certification.Certification} | {:error, code, reason}
+  @spec certification(uuid) :: {:ok, Enterprise.Certification.Certification.t} | {:error, code, reason}
   def certification(id) do
     remote_call(:certification, [id])
   end
@@ -430,7 +430,7 @@ defmodule Enterprise.Certification.Api do
 
   since: 0.0.1
   """
-  @spec events(uuid) :: {:ok, [Enterprise.Certification.Event]} | {:error, code, reason}
+  @spec events(uuid) :: {:ok, [Enterprise.Certification.Event.t]} | {:error, code, reason}
   def events(id) do
     remote_call(:events, [id])
   end
