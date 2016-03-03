@@ -57,6 +57,8 @@ defmodule Enterprise.Certification.Api do
   @doc """
   申请企业认证
 
+  ## 参数
+
   | arg                               | type   | meaning              |
   |-----------------------------------+--------+----------------------|
   | uid                               | uuid   | 申请人 ID            |
@@ -73,7 +75,23 @@ defmodule Enterprise.Certification.Api do
   | person_in_charge_rear_view        | string | 负责人证件背面照     |
   | person_in_charge_on_hand_view     | string | 负责人证件手持正面照 |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec apply(uuid, String.t, String.t, float, float, String.t, String.t, String.t, String.t, String.t, String.t, String.t, String.t) :: :ok | {:error, code, reason}
   def apply(uid, name, address, latitude, longitude, business_license_image, trader_license_image, franchise_license_image, legal_representative_frontal_view, legal_representative_rear_view, person_in_charge_frontal_view, person_in_charge_rear_view, person_in_charge_on_hand_view) do
@@ -83,12 +101,31 @@ defmodule Enterprise.Certification.Api do
   @doc """
   受理企业认证申请
 
+  ## 参数
+
   | arg | type | meaning   |
   |-----+------+-----------|
   | oid | uuid | 操作员 ID |
   | cid | uuid | 认证编号  |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec accept(uuid, uuid) :: :ok | {:error, code, reason}
   def accept(oid, cid) do
@@ -98,13 +135,33 @@ defmodule Enterprise.Certification.Api do
   @doc """
   将企业认证申请转交给其他操作员进行处理。
 
+  ## 参数
+
   | arg  | type | meaning         |
   |------+------+-----------------|
   | from | uuid | 操作员 ID       |
   | cid  | uuid | 认证编号        |
   | to   | uuid | 被转交操作员 ID |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason                  |
+  |------+-------------------------|
+  |  404 | 认证未发现/操作员未发现 |
+  |  500 | 服务内部错误            |
+
+  ## since: 0.0.1
+
   """
   @spec forward(uuid, uuid, uuid) :: :ok | {:error, code, reason}
   def forward(from, cid, to) do
@@ -113,6 +170,8 @@ defmodule Enterprise.Certification.Api do
 
   @doc """
   摘录基本信息
+
+  ## 参数
 
   | arg       | type   | meaning   |
   |-----------+--------+-----------|
@@ -123,7 +182,24 @@ defmodule Enterprise.Certification.Api do
   | latitude  | double | 企业纬度  |
   | longitude | double | 企业经度  |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec excerpt_base(uuid, uuid, String.t, String.t, float, float) :: :ok | {:error, code, reason}
   def excerpt_base(oid, cid, name, address, latitude, longitude) do
@@ -132,6 +208,8 @@ defmodule Enterprise.Certification.Api do
 
   @doc """
   摘录营业执照
+
+  ## 参数
 
   | arg                  | type   | meaning   |
   |----------------------+--------+-----------|
@@ -148,7 +226,24 @@ defmodule Enterprise.Certification.Api do
   | scope                | string | 营业范围  |
   | issuing_authority    | string | 发证机构  |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec excerpt_business_license(uuid, uuid, String.t, String.t, String.t, String.t, String.t, String.t, String.t, String.t, String.t, String.t) :: :ok | {:error, code, reason}
   def excerpt_business_license(oid, cid, license_no, name, type, address, legal_representative, register_at, start_at, stop_at, scope, issuing_authority) do
@@ -157,6 +252,8 @@ defmodule Enterprise.Certification.Api do
 
   @doc """
   摘录行业许可证
+
+  ## 参数
 
   | arg                  | type   | meaning   |
   |----------------------+--------+-----------|
@@ -174,7 +271,24 @@ defmodule Enterprise.Certification.Api do
   | issuing_authority    | string | 发证机构  |
   | region               | string | 经营地域  |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec excerpt_trader_license(uuid, uuid, String.t, String.t, String.t, String.t, String.t, String.t, String.t, String.t, String.t, String.t, String.t) :: :ok | {:error, code, reason}
   def excerpt_trader_license(oid, cid, license_no, name, type, address, legal_representative, register_at, start_at, stop_at, scope, issuing_authority, region) do
@@ -184,13 +298,32 @@ defmodule Enterprise.Certification.Api do
   @doc """
   摘录加盟信息
 
+  ## 参数
+
   | arg   | type   | meaning   |
   |-------+--------+-----------|
   | oid   | uuid   | 操作员 ID |
   | cid   | uuid   | 认证编号  |
   | brand | string | 企业品牌  |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec excerpt_franchise_license(uuid, uuid, String.t) :: :ok | {:error, code, reason}
   def excerpt_franchise_license(oid, cid, brand) do
@@ -200,6 +333,8 @@ defmodule Enterprise.Certification.Api do
   @doc """
   摘录法人代表
 
+  ## 参数
+
   | arg           | type   | meaning   |
   |---------------+--------+-----------|
   | oid           | uuid   | 操作员 ID |
@@ -209,6 +344,24 @@ defmodule Enterprise.Certification.Api do
   | license_type | string | 证件类型  |
   | license_no   | string | 证件号    |
 
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec excerpt_legal_representative(uuid, uuid, String.t, String.t, String.t, String.t) :: :ok | {:error, code, reason}
   def excerpt_legal_representative(oid, cid, name, phone, license_type, license_no) do
@@ -218,6 +371,8 @@ defmodule Enterprise.Certification.Api do
   @doc """
   摘录负责人
 
+  ## 参数
+
   | arg           | type   | meaning   |
   |---------------+--------+-----------|
   | oid           | uuid   | 操作员 ID |
@@ -227,7 +382,24 @@ defmodule Enterprise.Certification.Api do
   | license_type | string | 证件类型  |
   | license_no   | string | 证件号    |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec excerpt_person_in_charge(uuid, uuid, String.t, String.t, String.t, String.t) :: :ok | {:error, code, reason}
   def excerpt_person_in_charge(oid, cid, name, phone, license_type, license_no) do
@@ -237,12 +409,31 @@ defmodule Enterprise.Certification.Api do
   @doc """
   通过企业认证
 
+  ## 参数
+
   | arg | type | meaning   |
   |-----+------+-----------|
   | oid | uuid | 操作员 ID |
   | cid | uuid | 认证编号  |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec pass(uuid, uuid) :: :ok | {:error, code, reason}
   def pass(oid, cid) do
@@ -252,13 +443,32 @@ defmodule Enterprise.Certification.Api do
   @doc """
   拒绝企业认证，要填写拒绝的原因。
 
+  ## 参数
+
   | arg    | type   | meaning   |
   |--------+--------+-----------|
   | oid    | uuid   | 操作员 ID |
   | cid    | uuid   | 认证编号  |
   | reason | string | 拒绝原因  |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec refuse(uuid, uuid, String.t) :: :ok | {:error, code, reason}
   def refuse(oid, cid, reason) do
@@ -268,9 +478,19 @@ defmodule Enterprise.Certification.Api do
   @doc """
   获取企业认证状态。
 
+  ## 参数
+
   | arg | type | meaning  |
   |-----+------+----------|
   | cid | uuid | 认证编号 |
+
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, status}
+  ```
 
   返回的状态是:
 
@@ -279,7 +499,17 @@ defmodule Enterprise.Certification.Api do
   3. 已通过
   4. 已拒绝
 
-  since: 0.0.1
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec status(uuid) :: {:ok, String.t} | {:error, code, reason}
   def status(cid) do
@@ -289,13 +519,33 @@ defmodule Enterprise.Certification.Api do
   @doc """
   列出所有未受理认证。
 
+  ## 参数
+
   | arg    | type | meaning                                                                        |
   |--------+------+--------------------------------------------------------------------------------|
   | offset | int  | 列表开始索引                                                                   |
   | limit  | int  | 列表内容长度限制                                                               |
   | max    | uuid | 帐号 ID, 可选，返回不大于 max 代表条目的结果，若不填，则从系统最新条目开始返回 |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, [entity]}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec unaccepted(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Entity.t]} | {:error, code, reason}
   def unaccepted(offset, limit, max \\ nil) do
@@ -305,6 +555,8 @@ defmodule Enterprise.Certification.Api do
   @doc """
   列出所有已受理认证。
 
+  ## 参数
+
   | arg    | type | meaning                                                                        |
   |--------+------+--------------------------------------------------------------------------------|
   | oid    | uuid | 操作员 ID                                                                      |
@@ -312,7 +564,25 @@ defmodule Enterprise.Certification.Api do
   | limit  | int  | 列表内容长度限制                                                               |
   | max    | uuid | 帐号 ID, 可选，返回不大于 max 代表条目的结果，若不填，则从系统最新条目开始返回 |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, [entity]}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec accepted(uuid, non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Entity.t]} | {:error, code, reason}
   def accepted(oid, offset, limit, max \\ nil) do
@@ -322,13 +592,33 @@ defmodule Enterprise.Certification.Api do
   @doc """
   列出所有已通过认证。
 
+  ## 参数
+
   | arg    | type | meaning                                                                        |
   |--------+------+--------------------------------------------------------------------------------|
   | offset | int  | 列表开始索引                                                                   |
   | limit  | int  | 列表内容长度限制                                                               |
   | max    | uuid | 帐号 ID, 可选，返回不大于 max 代表条目的结果，若不填，则从系统最新条目开始返回 |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, [entity]}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec passed(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Entity.t]} | {:error, code, reason}
   def passed(offset, limit, max \\ nil) do
@@ -338,13 +628,33 @@ defmodule Enterprise.Certification.Api do
   @doc """
   列出所有已拒绝认证。
 
+  ## 参数
+
   | arg    | type | meaning                                                                        |
   |--------+------+--------------------------------------------------------------------------------|
   | offset | int  | 列表开始索引                                                                   |
   | limit  | int  | 列表内容长度限制                                                               |
   | max    | uuid | 帐号 ID, 可选，返回不大于 max 代表条目的结果，若不填，则从系统最新条目开始返回 |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, [entity]}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 认证未发现   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec refused(non_neg_integer, non_neg_integer, uuid | nil) :: {:ok, [Entity.t]} | {:error, code, reason}
   def refused(offset, limit, max \\ nil) do
@@ -354,11 +664,31 @@ defmodule Enterprise.Certification.Api do
   @doc """
   根据企业名称，搜索未受理认证信息。
 
+  ## 参数
+
   | arg  | type   | meaning  |
   |------+--------+----------|
   | name | string | 企业名称 |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, [entity]}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 未发现结果   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec search_unaccepted(String.t) :: {:ok, [Entity.t]} | {:error, code, reason}
   def search_unaccepted(name) do
@@ -368,12 +698,32 @@ defmodule Enterprise.Certification.Api do
   @doc """
   根据企业名称，搜索已受理信息。
 
+  ## 参数
+
   | arg  | type   | meaning   |
   |------+--------+-----------|
   | oid  | uuid   | 操作员 ID |
   | name | string | 企业名称  |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, [entity]}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 未发现结果   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec search_accepted(uuid, String.t) :: {:ok, [Entity.t]} | {:error, code, reason}
   def search_accepted(oid, name) do
@@ -383,11 +733,31 @@ defmodule Enterprise.Certification.Api do
   @doc """
   根据企业名称，搜索已通过认证信息。
 
+  ## 参数
+
   | arg  | type   | meaning  |
   |------+--------+----------|
   | name | string | 企业名称 |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, [entity]}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 未发现结果   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec search_passed(String.t) :: {:ok, [Entity.t]} | {:error, code, reason}
   def search_passed(name) do
@@ -397,11 +767,31 @@ defmodule Enterprise.Certification.Api do
   @doc """
   根据企业名称，搜索已拒绝认证信息。
 
+  ## 参数
+
   | arg  | type   | meaning  |
   |------+--------+----------|
   | name | string | 企业名称 |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, [entity]}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 未发现结果   |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec search_refused(String.t) :: {:ok, [Entity.t]} | {:error, code, reason}
   def search_refused(name) do
@@ -411,11 +801,31 @@ defmodule Enterprise.Certification.Api do
   @doc """
   获取企业认证详情。
 
+  ## 参数
+
   | arg | type | meaning |
   |-----+------+---------|
   | id  | uuid | 认证 ID |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, [entity]}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 未发现认证 |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec certification(uuid) :: {:ok, Entity.t} | {:error, code, reason}
   def certification(id) do
@@ -425,11 +835,31 @@ defmodule Enterprise.Certification.Api do
   @doc """
   列出某个认证下的事件流
 
+  ## 参数
+
   | arg | type | meaning |
   |-----+------+---------|
   | id  | uuid | 认证 ID |
 
-  since: 0.0.1
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, [event]}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  404 | 未发现认证 |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.1
   """
   @spec events(uuid) :: {:ok, [Event.t]} | {:error, code, reason}
   def events(id) do
