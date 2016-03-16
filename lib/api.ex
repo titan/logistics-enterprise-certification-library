@@ -12,7 +12,7 @@ defmodule Enterprise.Certification.Api do
   ```elixir
   ...
   defp deps do
-  [ {:enterprise_certification_library, git: "git@gitlab.ruicloud.cn:titan/logistics-enterprise-certification-library.git", tag: "0.0.2" } ]
+  [ {:enterprise_certification_library, git: "git@gitlab.ruicloud.cn:titan/logistics-enterprise-certification-library.git", tag: "0.0.3" } ]
   end
   ```
 
@@ -22,7 +22,7 @@ defmodule Enterprise.Certification.Api do
   在 Application 的 start 方法中，加入如下代码，确保帐号服务能被 resource_discovery 模块发现。
   ```elixir
   def start(_type, _args) do
-  :ok = ensure_contact()
+  ...
   :resource_discovery.add_target_resource_type(:enterprise_certification_service)
   ...
   :resource_discovery.trade_resources()
@@ -32,7 +32,7 @@ defmodule Enterprise.Certification.Api do
   ```
 
   """
-  @vsn "0.0.1"
+  @vsn "0.0.3"
 
   @typedoc """
   Integer 类型的错误状态编码
@@ -864,6 +864,42 @@ defmodule Enterprise.Certification.Api do
   @spec events(uuid) :: {:ok, [Event.t]} | {:error, code, reason}
   def events(id) do
     remote_call(:events, [id])
+  end
+
+  @doc """
+  向某从业人员发出加盟邀请
+
+  ## 参数
+
+  |arg|type|meaning|
+  |---|----|-------|
+  |id|uuid|认证 ID|
+  |eid|uuid|从业人员 ID|
+
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  :ok
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  403 | 企业未通过认证 |
+  |  404 | 未发现认证 |
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.3
+  """
+  @spec invite(uuid, uuid) :: :ok | {:error, code, reason}
+  def invite(id, eid) do
+    remote_call(:invite, [id, eid])
   end
 
   @spec remote_call(atom, [integer | non_neg_integer | float | String.t]) :: :ok | {:ok, Entity.t} | {:ok, [Entity.t]} | {:ok, [Event.t]} | {:error, code, reason}
