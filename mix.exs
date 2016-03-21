@@ -3,7 +3,7 @@ defmodule Enterprise.Certification.Library.Mixfile do
 
   def project do
     [app: :enterprise_certification_library,
-     version: "0.0.2",
+     version: "0.0.4",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,

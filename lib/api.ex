@@ -31,8 +31,14 @@ defmodule Enterprise.Certification.Api do
   end
   ```
 
+  为了能让应用读取到正确的配置信息，在 config.exs 文件中添加如下内容：
+  ```elixir
+  config :resource_discovery, contact_nodes: [:contact1@contact1, :contact2@contact2]
+  ```
+  contact_nodes 可以根据具体情况进行调整。
+
   """
-  @vsn "0.0.3"
+  @vsn "0.0.4"
 
   @typedoc """
   Integer 类型的错误状态编码
@@ -80,9 +86,12 @@ defmodule Enterprise.Certification.Api do
   ### 成功
 
   ```elixir
-  :ok
+  {:ok, uuid}
   ```
+  此处的 uuid 是企业认证的 UUID
+
   ### 失败
+
   ```elixir
   {:error, code, reason}
   ```
@@ -91,9 +100,9 @@ defmodule Enterprise.Certification.Api do
   |------+--------------|
   |  500 | 服务内部错误 |
 
-  ## since: 0.0.1
+  ## since: 0.0.4
   """
-  @spec apply(uuid, String.t, String.t, float, float, String.t, String.t, String.t, String.t, String.t, String.t, String.t, String.t) :: :ok | {:error, code, reason}
+  @spec apply(uuid, String.t, String.t, float, float, String.t, String.t, String.t, String.t, String.t, String.t, String.t, String.t) :: {:ok, uuid} | {:error, code, reason}
   def apply(uid, name, address, latitude, longitude, business_license_image, trader_license_image, franchise_license_image, legal_representative_frontal_view, legal_representative_rear_view, person_in_charge_frontal_view, person_in_charge_rear_view, person_in_charge_on_hand_view) do
     remote_call(:apply, [uid, name, address, latitude, longitude, business_license_image, trader_license_image, franchise_license_image, legal_representative_frontal_view, legal_representative_rear_view, person_in_charge_frontal_view, person_in_charge_rear_view, person_in_charge_on_hand_view]);
   end
