@@ -3,7 +3,7 @@ defmodule Enterprise.Certification.Library.Mixfile do
 
   def project do
     [app: :enterprise_certification_library,
-     version: "0.0.4",
+     version: "0.0.5",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -14,6 +14,7 @@ defmodule Enterprise.Certification.Library.Mixfile do
   defp deps do
     [
       {:poison, "~> 2.0"},
+      {:resource_discovery, git: "https://github.com/titan/resource_discovery.git", branch: "master"},
       {:ex_doc, "~> 0.11", only: :dev}
     ]
   end

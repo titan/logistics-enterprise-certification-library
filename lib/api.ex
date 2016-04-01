@@ -12,7 +12,7 @@ defmodule Enterprise.Certification.Api do
   ```elixir
   ...
   defp deps do
-  [ {:enterprise_certification_library, git: "git@gitlab.ruicloud.cn:titan/logistics-enterprise-certification-library.git", tag: "0.0.3" } ]
+  [ {:enterprise_certification_library, git: "git@gitlab.ruicloud.cn:titan/logistics-enterprise-certification-library.git", tag: "0.0.5" } ]
   end
   ```
 
@@ -38,7 +38,7 @@ defmodule Enterprise.Certification.Api do
   contact_nodes 可以根据具体情况进行调整。
 
   """
-  @vsn "0.0.4"
+  @vsn "0.0.5"
 
   @typedoc """
   Integer 类型的错误状态编码
@@ -821,7 +821,7 @@ defmodule Enterprise.Certification.Api do
   ### 成功
 
   ```elixir
-  {:ok, [entity]}
+  {:ok, Entity.t}
   ```
 
   ### 失败
@@ -909,6 +909,39 @@ defmodule Enterprise.Certification.Api do
   @spec invite(uuid, uuid) :: :ok | {:error, code, reason}
   def invite(id, eid) do
     remote_call(:invite, [id, eid])
+  end
+
+  @doc """
+  批量获取企业认证详情。
+
+  ## 参数
+
+  | arg | type | meaning |
+  |-----+------+---------|
+  | ids |[uuid]| 认证 ID |
+
+  ## 结果
+
+  ### 成功
+
+  ```elixir
+  {:ok, %{uuid => Entity.t}}
+  ```
+
+  ### 失败
+  ```elixir
+  {:error, code, reason}
+  ```
+
+  | code | reason       |
+  |------+--------------|
+  |  500 | 服务内部错误 |
+
+  ## since: 0.0.5
+  """
+  @spec batch_certifications([uuid]) :: {:ok, %{uuid => Entity.t}} | {:error, code, reason}
+  def batch_certifications(ids) do
+    remote_call(:batch_certifications, [ids])
   end
 
   @spec remote_call(atom, [integer | non_neg_integer | float | String.t]) :: :ok | {:ok, Entity.t} | {:ok, [Entity.t]} | {:ok, [Event.t]} | {:error, code, reason}
